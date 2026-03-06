@@ -8,7 +8,7 @@
 (function () {
   'use strict';
 
-  var CDN_BASE = 'https://hostdgtl.com/assets/';
+  var CDN_BASE = 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/assets/';
 
   // Inject Google Fonts if not already present
   if (!document.querySelector('link[href*="fonts.googleapis.com/css2"][href*="Inter"]')) {
