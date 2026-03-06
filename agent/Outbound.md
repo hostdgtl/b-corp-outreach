@@ -18,7 +18,7 @@ Sending the email to B-corp companies in the UK. The list is here:
 https://docs.google.com/spreadsheets/d/1MYTsz1Vz_IBKWmr1Oo72HQwXvQ0IR6fxS-E1eFZHd84/edit?gid=570772518#gid=570772518
 ('master_list' tab)
 
-Only a subset of companies on this list are elgible for outreach. Here is the criteria:
+Only a subset of companies on this list are eligible for outreach. Here is the criteria:
 
 a. Must have more than 40,000 people to the website last month (source: SimilarWeb Chrome extension)
 b. Website must be on Shopify (source: BuiltWith, e.g. https://builtwith.com/bbc.co.uk)
@@ -50,17 +50,15 @@ a. Duplicate the 'b-corp-main' folder in this repo
 
 b. Name this new folder 'Company-Name' (use Train-Case)
 
-c. In the code for each new widget (the 3 new versions), replace the reference to handmade.avif with:
+c. In the code for each new widget, replace the reference to handmade.avif with: COMPANY-NAME-logo
 
-Company_Name_Logo
+You'll need to source this logo asset via a web search.
+Working in the 'Company-Name' folder, replace the reference to handmade.avif with: "C:\Users\alan\Desktop\Outreach\Company-Name\assets\Company-Name-Logo.svg"
 
 And delete handmade.avif in each assets folder.
-
-Working in the 'COMPANY-NAME' folder, replace the reference to handmade.avif with: "C:\Users\alan\Desktop\Outreach\Company-Name\assets\Company-Name-Logo.svg"
-
 ## STEP 4: Building personalised widget
 
-Update the below code block. Don't edit the code in our codebase, just provide the full updated code block in our chat that I can paste into the browser console for the purposes of client demo.
+Create a new code block. Use the below template. This code will be injected into the the browser console for the purposes of client demo.
 
 You should adjust the following values based on the information about each company in this directory: https://www.bcorporation.net/en-us/find-a-b-corp/ 
 
@@ -69,9 +67,7 @@ brandName, brandLogo, overallScore, certificationDate, qualifyingScore, medianSc
 Finally, you will also need to replace:
 https://hostdgtl.com/scripts/master/style.css
 https://hostdgtl.com/scripts/master/app.js
-
 Here is the code to adjust:
-
 {
 // 1. Set the data the widget needs to run
 window.BCORP_CONFIG = {

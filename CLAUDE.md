@@ -42,17 +42,18 @@ Each customer folder follows the same structure: `assets/`, `scripts/` (with `ap
 2. **Preview locally** by opening `index.html` or `widget.html` in browser
 3. **Commit and push** this repo (`b-corp-outreach`)
 
-### Deploying to hostdgtl.com (when ready to go live)
+### Serving via jsDelivr CDN
 
-Widget scripts and brand logos need to be copied to the hostdgtl.com website repo for serving:
+Widget scripts and brand logos are served directly from this GitHub repo via jsDelivr. No separate deployment step is needed — just commit and push to `main`, and jsDelivr serves the files with correct MIME types.
 
-1. Copy `{customer}/scripts/app.js` + `style.css` to `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\scripts\{customer-name}\`
-2. Copy brand logo to `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\assets\`
-3. Stage only the new/changed files in the hostdgtl repo — do not use `git add -A` or `git add .`
-4. Commit and push the hostdgtl repo
-5. Hostinger auto-deploys
+**Base URL:** `https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/`
 
-**Note:** There are currently no live deployed widgets on hostdgtl.com. Widget scripts and brand logos were removed from that repo to separate the two projects.
+Examples:
+- Master widget JS: `https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/app.js`
+- Master widget CSS: `https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/style.css`
+- Customer logo: `https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/{Customer}/assets/{logo-file}`
+
+**Cache:** jsDelivr caches files aggressively. Using `@main` auto-refreshes within ~12 hours. For instant purge, use `https://purge.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/{path}`.
 
 ## Widget Versions
 
@@ -66,7 +67,7 @@ Widget scripts and brand logos need to be copied to the hostdgtl.com website rep
 2. Copy files from `b-corp-main/` as starting point
 3. Customize as needed (see `Outbound.md` for the full outreach workflow)
 4. Commit and push to this repo
-5. When ready to go live, deploy to the hostdgtl website repo (see above)
+5. Commit and push — jsDelivr serves the files automatically
 6. Provide embed code to customer
 
 ## Embed Code Template
@@ -82,7 +83,7 @@ Widget scripts and brand logos need to be copied to the hostdgtl.com website rep
 <script>
   window.BCORP_CONFIG = {
     brandName: 'Customer Brand Name',
-    brandLogo: 'https://hostdgtl.com/assets/{logo-file}',
+    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/{Customer}/assets/{logo-file}',
     overallScore: 0,
     certificationDate: 'Month Year',
     qualifyingScore: 80,
@@ -96,8 +97,8 @@ Widget scripts and brand logos need to be copied to the hostdgtl.com website rep
   };
 </script>
 
-<link rel="stylesheet" href="https://hostdgtl.com/scripts/{version}/style.css">
-<script src="https://hostdgtl.com/scripts/{version}/app.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/style.css">
+<script src="https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/app.js" defer></script>
 ```
 
 ## Browser Console Demo Script
@@ -108,7 +109,7 @@ For demoing the widget on any webpage (inject via Chrome DevTools console):
 {
   window.BCORP_CONFIG = {
     brandName: 'The Handmade Soap Company',
-    brandLogo: 'https://hostdgtl.com/assets/handmade.avif',
+    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/handmade-soap/assets/handmade.avif',
     overallScore: 94.1,
     certificationDate: 'October 2022',
     qualifyingScore: 80,
@@ -133,11 +134,11 @@ For demoing the widget on any webpage (inject via Chrome DevTools console):
 
   const cssLink = document.createElement('link');
   cssLink.rel = 'stylesheet';
-  cssLink.href = 'https://hostdgtl.com/scripts/master/style.css';
+  cssLink.href = 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/style.css';
   document.head.appendChild(cssLink);
 
   const widgetScript = document.createElement('script');
-  widgetScript.src = 'https://hostdgtl.com/scripts/master/app.js';
+  widgetScript.src = 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/app.js';
   document.body.appendChild(widgetScript);
 
   const style = document.createElement('style');
@@ -162,7 +163,6 @@ For demoing the widget on any webpage (inject via Chrome DevTools console):
 
 ## Important Notes
 
-1. **CDN_BASE** in `app.js` should point to `https://hostdgtl.com/assets/` (not jsDelivr)
-2. **No widgets are currently deployed** on hostdgtl.com — scripts and brand logos were removed from that repo
-3. **Deployment** to hostdgtl.com requires manually copying scripts and assets to the website repo (see workflow above)
-4. **Outbound.md** contains the full outreach process: targeting, email acquisition, widget building, and demo steps
+1. **CDN_BASE** in `app.js` — each customer's `app.js` may reference assets via CDN_BASE. For jsDelivr serving, logo paths in `console-script.js` use the full jsDelivr URL
+2. **Widget scripts are served via jsDelivr** from this repo — no separate deployment to hostdgtl.com is needed
+3. **Outbound.md** contains the full outreach process: targeting, email acquisition, widget building, and demo steps
