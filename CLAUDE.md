@@ -4,30 +4,18 @@
 
 This project provides embeddable B Corp certification widgets for customers (primarily Shopify stores). Each customer can have their own customized version of the widget, or use the master template with their own config values.
 
-## Architecture
+## Repo
 
-```
-Customer's Shopify Site
-        |
-        +-- <div id="bcorp-widget">
-        +-- <script> window.BCORP_CONFIG = {...} </script>
-        +-- <link> -> hostdgtl.com/scripts/{version}/style.css
-        +-- <script> -> hostdgtl.com/scripts/{version}/app.js
-                              |
-                              v
-                    Hostinger (hostdgtl.com)
-                              |
-                              v
-                    GitHub (hostdigitaldata/hostdgtl)
-```
-
-Widget scripts and assets are served from hostdgtl.com. The website repo lives at `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\`.
+- GitHub: `https://github.com/hostdgtl/b-corp-outreach`
+- Branch: `main`
+- Local path: `C:\Users\alan\Desktop\Outreach\`
 
 ## Local Folder Structure
 
 ```
 Outreach/
 ├── CLAUDE.md                 # This file
+├── Outbound.md               # Outreach email workflow & targeting process
 │
 ├── b-corp-main/              # Master widget template
 │   ├── assets/
@@ -39,7 +27,7 @@ Outreach/
 ├── handmade-soap/            # The Handmade Soap Company
 ├── Delilah/
 ├── Gatineau/
-├── Hertility/
+├── Hertility/                # Includes _plans/, _specs/, and deployed/
 ├── NalasBaby/
 ├── Peaches/
 ├── SaltOfTheEarth/
@@ -52,16 +40,23 @@ Each customer folder follows the same structure: `assets/`, `scripts/` (with `ap
 
 1. **Edit locally** in the customer's folder (e.g. `b-corp-main/`, `Peaches/`)
 2. **Preview locally** by opening `index.html` or `widget.html` in browser
-3. **Deploy** — copy to the hostdgtl.com website repo at `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\`:
-   - **Scripts:** `{customer}/scripts/app.js` + `style.css` → `hostdgtl/scripts/{customer-name}/`
-   - **Brand logo:** `{customer}/assets/{logo-file}` → `hostdgtl/assets/`
-4. **Stage only the new/changed files** in the hostdgtl repo — do not use `git add -A` or `git add .`
-5. **Commit and push** the hostdgtl repo
-6. **Hostinger auto-deploys** (or click Deploy button)
+3. **Commit and push** this repo (`b-corp-outreach`)
+
+### Deploying to hostdgtl.com (when ready to go live)
+
+Widget scripts and brand logos need to be copied to the hostdgtl.com website repo for serving:
+
+1. Copy `{customer}/scripts/app.js` + `style.css` to `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\scripts\{customer-name}\`
+2. Copy brand logo to `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\assets\`
+3. Stage only the new/changed files in the hostdgtl repo — do not use `git add -A` or `git add .`
+4. Commit and push the hostdgtl repo
+5. Hostinger auto-deploys
+
+**Note:** There are currently no live deployed widgets on hostdgtl.com. Widget scripts and brand logos were removed from that repo to separate the two projects.
 
 ## Widget Versions
 
-### Master (`/scripts/master/`)
+### Master
 - Generic template widget in `b-corp-main/`
 - Use for new customers who don't need customizations
 - Customers configure via `BCORP_CONFIG` object
@@ -69,9 +64,10 @@ Each customer folder follows the same structure: `assets/`, `scripts/` (with `ap
 ### Adding New Customers
 1. Create folder: `Outreach/{customer-name}/`
 2. Copy files from `b-corp-main/` as starting point
-3. Customize as needed
-4. Deploy scripts + brand logo to the hostdgtl website repo (see workflow above)
-5. Provide embed code to customer
+3. Customize as needed (see `Outbound.md` for the full outreach workflow)
+4. Commit and push to this repo
+5. When ready to go live, deploy to the hostdgtl website repo (see above)
+6. Provide embed code to customer
 
 ## Embed Code Template
 
@@ -106,9 +102,8 @@ Each customer folder follows the same structure: `assets/`, `scripts/` (with `ap
 
 ## Browser Console Demo Script
 
-For demoing the widget on any webpage:
+For demoing the widget on any webpage (inject via Chrome DevTools console):
 
-### Master Version
 ```javascript
 {
   window.BCORP_CONFIG = {
@@ -153,15 +148,6 @@ For demoing the widget on any webpage:
 }
 ```
 
-## Key URLs
-
-| Resource | URL |
-|----------|-----|
-| Master CSS | https://hostdgtl.com/scripts/master/style.css |
-| Master JS | https://hostdgtl.com/scripts/master/app.js |
-| Assets folder | https://hostdgtl.com/assets/ |
-| Website repo (for deployment) | `C:\Users\alan\Desktop\hostdgtl.com\hostdgtl\` |
-
 ## Local Preview URLs
 
 | Widget | Local Preview |
@@ -169,8 +155,14 @@ For demoing the widget on any webpage:
 | Master | `file:///C:/Users/alan/Desktop/Outreach/b-corp-main/index.html` |
 | Handmade Soap | `file:///C:/Users/alan/Desktop/Outreach/handmade-soap/widget.html` |
 
+## Git Config
+
+- Name: `hostdigitaldata`
+- Email: `hostinsight@gmail.com`
+
 ## Important Notes
 
 1. **CDN_BASE** in `app.js` should point to `https://hostdgtl.com/assets/` (not jsDelivr)
-2. **Legacy files** at `/scripts/app.js` and `/scripts/style.css` on hostdgtl.com still exist for backwards compatibility
-3. **Deployment** goes through the hostdgtl website repo — only `scripts/{customer}/` and `assets/` need updating there
+2. **No widgets are currently deployed** on hostdgtl.com — scripts and brand logos were removed from that repo
+3. **Deployment** to hostdgtl.com requires manually copying scripts and assets to the website repo (see workflow above)
+4. **Outbound.md** contains the full outreach process: targeting, email acquisition, widget building, and demo steps
