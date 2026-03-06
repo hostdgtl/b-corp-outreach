@@ -1,0 +1,27 @@
+<!--
+  B Corp Widget — Shopify Custom Liquid Block
+  Paste this into a Custom Liquid block on your product page.
+  Edit the BCORP_CONFIG values below to match your brand.
+-->
+
+<div id="bcorp-widget"></div>
+
+<script>
+  window.BCORP_CONFIG = {
+    brandName: 'The Handmade Soap Company',
+    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdigitaldata/b-corp@main/assets/handmade.avif',
+    overallScore: 94.1,
+    certificationDate: 'October 2022',
+    qualifyingScore: 80,
+    medianScore: 50.9,
+    governance: 17.4,
+    workers: 20.5,
+    community: 20.8,
+    environment: 32.0,
+    customers: 3.1,
+    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/the-handmade-soap-company/'
+  };
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hostdigitaldata/b-corp@main/widget.css">
+<script src="https://cdn.jsdelivr.net/gh/hostdigitaldata/b-corp@main/widget.js" defer></script>

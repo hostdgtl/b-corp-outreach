@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Data Overview — Hertility Health</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        teal: {
+                            50: '#e6f7f5',
+                            100: '#ccefeb',
+                            200: '#99dfd6',
+                            300: '#66cfc2',
+                            400: '#33bfad',
+                            500: '#00a897',
+                            600: '#008f80',
+                            700: '#007569',
+                            800: '#005c52',
+                            900: '#00433b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Password gate transitions */
+        #password-gate {
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        #password-gate.gate-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Main content fade-in */
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease 0.2s;
+        }
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* Shake animation for wrong password */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .shake { animation: shake 0.4s ease; }
+
+        /* Scroll-triggered fade-up */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-up.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        /* Collapsible video cards */
+        .video-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
+        }
+        .video-content.open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+        .video-content > div {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-white font-sans text-gray-700 antialiased">
+
+    <!-- ======================== PASSWORD GATE ======================== -->
+    <div id="password-gate" class="fixed inset-0 z-50 bg-white flex items-center justify-center px-6">
+        <div class="w-full max-w-sm text-center">
+            <!-- Hertility logo -->
+            <div class="mb-8 flex justify-center">
+                <svg width="160" height="37" viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hertility Health">
+                    <g clip-path="url(#clip_gate)">
+                        <path d="M0.118341 20.5054L0.946745 20.4454C1.83432 20.3854 1.98225 20.3255 1.98225 19.4561V3.41756L0 2.03854V1.88865L5.08876 0V10.8223C5.65089 8.60386 7.13018 7.37473 9.26036 7.37473C11.6272 7.37473 13.1657 8.69379 13.1657 12.531V19.4561C13.1657 20.2955 13.284 20.3854 14.2012 20.4454L15.0296 20.5054V21.2248H8.3432V20.5054L9.05325 20.4454C9.94083 20.3555 10.0592 20.3255 10.0592 19.4561V13.1306C10.0592 10.1328 9.20118 9.29336 7.72189 9.29336C6.36095 9.29336 5.11835 10.1927 5.11835 13.1606V19.4561C5.11835 20.2955 5.2071 20.3555 6.12426 20.4454L6.83432 20.5054V21.2248H0.118341V20.5054Z" fill="black"/>
+                        <path d="M28.5798 15.9785C27.8105 18.6466 25.7691 19.456 24.1419 19.456C21.2425 19.456 19.3194 16.7879 19.3194 13.1005V12.7108H29.0827C28.2839 9.02343 25.71 7.43457 22.8105 7.43457C21.299 7.44743 19.8355 7.97461 18.6551 8.93146C17.4747 9.88831 16.6459 11.2193 16.3017 12.7108C16.1549 13.3189 16.0853 13.9435 16.0946 14.5695C16.0946 18.7665 18.7573 21.5845 22.8993 21.5845C26.1537 21.5845 28.5502 19.7857 29.2307 16.0084H28.5798V15.9785ZM22.7218 8.12408C24.4969 8.12408 25.3549 9.47312 25.4437 11.7215H19.4674C19.7928 9.38318 21.065 8.12408 22.7218 8.12408Z" fill="black"/>
+                        <path d="M39.3786 7.28491C38.0176 7.28491 36.5975 8.30418 35.8283 10.7324V7.28491L30.71 9.35343V9.50333L32.6922 11.0023V19.4862C32.6922 20.3256 32.5739 20.4155 31.6567 20.4755L30.8283 20.5354V21.2549H38.3135V20.5055L36.923 20.4155C36.0354 20.3556 35.8283 20.3256 35.8283 19.4862V12.711C35.8283 11.302 36.6271 10.0429 36.9526 9.80311L39.9407 11.2721C40.6804 11.0922 41.3017 10.2528 41.3017 9.17356C41.3017 8.09433 40.5916 7.28491 39.3786 7.28491Z" fill="black"/>
+                        <path d="M50.3845 19.9957C51.1573 20.0247 51.9206 19.8157 52.5738 19.3962L52.9289 20.0257C51.8638 20.8651 50.059 21.4047 48.5797 21.4047C46.3312 21.4047 45.2661 20.7452 45.2661 18.4368V9.50323H42.5146V9.35334L48.2543 4.9165H48.4318V7.82443H53.8164L52.7513 9.53321H48.4022V17.6874C48.4318 19.4261 49.201 19.9957 50.3845 19.9957Z" fill="black"/>
+                        <path d="M54.9113 20.5055L55.7397 20.4455C56.5977 20.3855 56.7752 20.3256 56.7752 19.4562V11.0022L54.793 9.50331V9.35342L59.9113 7.2849V19.4562C59.9113 20.2956 60.0592 20.3855 60.9468 20.4455L61.7752 20.5055V21.2249H54.9409V20.5055H54.9113ZM58.3137 0.0600586C58.8165 0.121288 59.2798 0.36711 59.6159 0.751035C59.952 1.13496 60.1376 1.63037 60.1376 2.14357C60.1376 2.65677 59.952 3.15218 59.6159 3.5361C59.2798 3.92003 58.8165 4.16586 58.3137 4.22708C57.7746 4.20379 57.2642 3.97433 56.8854 3.58493C56.5066 3.19554 56.2875 2.67514 56.2723 2.12858C56.2799 1.58239 56.4974 1.06074 56.8786 0.674483C57.2598 0.288227 57.7746 0.0678072 58.3137 0.0600586Z" fill="black"/>
+                        <path d="M63.1955 20.5054L64.0239 20.4454C64.9115 20.3855 65.0594 20.3255 65.0594 19.4562V3.41761L63.0771 2.03859V1.8887L68.1955 0.0300293V19.4861C68.1955 20.3255 68.3138 20.4155 69.231 20.4754L70.0594 20.5354V21.2549H63.2251V20.5054H63.1955Z" fill="black"/>
+                        <path d="M71.4792 20.5055L72.3076 20.4455C73.1656 20.3855 73.3431 20.3256 73.3431 19.4562V11.0022L71.3608 9.50331V9.35342L76.4792 7.2849V19.4562C76.4792 20.2956 76.6271 20.3855 77.5147 20.4455L78.3431 20.5055V21.2249H71.5088V20.5055H71.4792ZM74.8816 0.0600586C75.3844 0.121288 75.8477 0.36711 76.1838 0.751035C76.5199 1.13496 76.7055 1.63037 76.7055 2.14357C76.7055 2.65677 76.5199 3.15218 76.1838 3.5361C75.8477 3.92003 75.3844 4.16586 74.8816 4.22708C74.3424 4.20379 73.8321 3.97433 73.4533 3.58493C73.0744 3.19554 72.8554 2.67514 72.8401 2.12858C72.8478 1.58239 73.0653 1.06074 73.4465 0.674483C73.8277 0.288227 74.3425 0.0678072 74.8816 0.0600586Z" fill="black"/>
+                        <path d="M86.2131 19.9957C86.9859 20.0247 87.7492 19.8157 88.4024 19.3962L88.7575 20.0257C87.6924 20.8651 85.8876 21.4047 84.4083 21.4047C82.1598 21.4047 81.0948 20.7452 81.0948 18.4368V9.50323H78.3433V9.35334L84.0829 4.9165H84.2604V7.82443H89.645L88.58 9.53321H84.2308V17.6874C84.2308 19.4261 85.0297 19.9957 86.2131 19.9957Z" fill="black"/>
+                        <path d="M92.2779 26.5312C92.2779 25.362 93.2838 24.4027 95.9169 23.983L97.1299 21.2849L92.337 9.89304C91.982 9.05364 91.7749 8.72387 90.9169 8.63394L90.3252 8.57398V7.85449H97.2483V8.57398L96.5382 8.63394C95.6802 8.69389 95.414 9.02366 95.7098 9.74314L98.8755 17.4177L102.041 10.3427C102.574 9.14357 102.16 8.69389 101.302 8.63394L100.444 8.57398V7.85449H105.532V8.57398L104.852 8.63394C103.994 8.72387 103.668 9.02366 103.254 9.95299L96.3607 25.332C95.5323 27.1607 94.911 28.0001 93.8163 28.0001C92.8696 27.9701 92.2779 27.3106 92.2779 26.5312Z" fill="black"/>
+                        <path d="M120 5.09631C119.32 1.10915 115.533 -0.929388 111.923 0.539563C108.343 -0.929388 104.527 1.10915 103.846 5.09631H105.562C104.823 1.91858 108.55 -0.629602 111.243 0.839349C110.465 1.26932 109.831 1.92315 109.42 2.71821C109.01 3.51326 108.841 4.41385 108.935 5.30616C109.112 7.28474 110.385 8.84363 111.894 9.95284C113.402 8.84363 114.675 7.28474 114.852 5.30616C115.118 3.50744 114.083 1.70873 112.544 0.839349C115.207 -0.629602 118.965 1.91858 118.225 5.09631H120ZM113.757 5.2462C113.817 6.68517 113.077 8.24406 111.953 9.32329C110.799 8.24406 110.059 6.68517 110.148 5.2462C110.242 3.75409 110.886 2.35234 111.953 1.319C113.018 2.27832 113.639 3.83721 113.757 5.2462Z" fill="black"/>
+                    </g>
+                    <defs><clipPath id="clip_gate"><rect width="120" height="28" fill="white"/></clipPath></defs>
+                </svg>
+            </div>
+
+            <p class="text-gray-400 text-sm mb-6">Enter password to view this page</p>
+
+            <form id="password-form" class="space-y-3">
+                <input
+                    id="password-input"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="off"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-200 text-center text-gray-800
+                           placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:ring-2
+                           focus:ring-teal-500/20 transition-all"
+                >
+                <button
+                    type="submit"
+                    class="w-full px-4 py-3 bg-teal-500 text-white font-medium rounded-xl
+                           hover:bg-teal-600 active:bg-teal-700 transition-colors cursor-pointer"
+                >
+                    Continue
+                </button>
+                <p id="password-error" class="text-red-500 text-sm hidden">Incorrect password</p>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ======================== MAIN CONTENT ======================== -->
+    <div id="main-content" style="display:none">
+
+        <!-- ---- HERO ---- -->
+        <header class="pt-12 md:pt-16 pb-10 md:pb-14 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <svg width="140" height="33" viewBox="0 0 120 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hertility Health">
+                        <g clip-path="url(#clip_header)">
+                            <path d="M0.118341 20.5054L0.946745 20.4454C1.83432 20.3854 1.98225 20.3255 1.98225 19.4561V3.41756L0 2.03854V1.88865L5.08876 0V10.8223C5.65089 8.60386 7.13018 7.37473 9.26036 7.37473C11.6272 7.37473 13.1657 8.69379 13.1657 12.531V19.4561C13.1657 20.2955 13.284 20.3854 14.2012 20.4454L15.0296 20.5054V21.2248H8.3432V20.5054L9.05325 20.4454C9.94083 20.3555 10.0592 20.3255 10.0592 19.4561V13.1306C10.0592 10.1328 9.20118 9.29336 7.72189 9.29336C6.36095 9.29336 5.11835 10.1927 5.11835 13.1606V19.4561C5.11835 20.2955 5.2071 20.3555 6.12426 20.4454L6.83432 20.5054V21.2248H0.118341V20.5054Z" fill="black"/>
+                            <path d="M28.5798 15.9785C27.8105 18.6466 25.7691 19.456 24.1419 19.456C21.2425 19.456 19.3194 16.7879 19.3194 13.1005V12.7108H29.0827C28.2839 9.02343 25.71 7.43457 22.8105 7.43457C21.299 7.44743 19.8355 7.97461 18.6551 8.93146C17.4747 9.88831 16.6459 11.2193 16.3017 12.7108C16.1549 13.3189 16.0853 13.9435 16.0946 14.5695C16.0946 18.7665 18.7573 21.5845 22.8993 21.5845C26.1537 21.5845 28.5502 19.7857 29.2307 16.0084H28.5798V15.9785ZM22.7218 8.12408C24.4969 8.12408 25.3549 9.47312 25.4437 11.7215H19.4674C19.7928 9.38318 21.065 8.12408 22.7218 8.12408Z" fill="black"/>
+                            <path d="M39.3786 7.28491C38.0176 7.28491 36.5975 8.30418 35.8283 10.7324V7.28491L30.71 9.35343V9.50333L32.6922 11.0023V19.4862C32.6922 20.3256 32.5739 20.4155 31.6567 20.4755L30.8283 20.5354V21.2549H38.3135V20.5055L36.923 20.4155C36.0354 20.3556 35.8283 20.3256 35.8283 19.4862V12.711C35.8283 11.302 36.6271 10.0429 36.9526 9.80311L39.9407 11.2721C40.6804 11.0922 41.3017 10.2528 41.3017 9.17356C41.3017 8.09433 40.5916 7.28491 39.3786 7.28491Z" fill="black"/>
+                            <path d="M50.3845 19.9957C51.1573 20.0247 51.9206 19.8157 52.5738 19.3962L52.9289 20.0257C51.8638 20.8651 50.059 21.4047 48.5797 21.4047C46.3312 21.4047 45.2661 20.7452 45.2661 18.4368V9.50323H42.5146V9.35334L48.2543 4.9165H48.4318V7.82443H53.8164L52.7513 9.53321H48.4022V17.6874C48.4318 19.4261 49.201 19.9957 50.3845 19.9957Z" fill="black"/>
+                            <path d="M54.9113 20.5055L55.7397 20.4455C56.5977 20.3855 56.7752 20.3256 56.7752 19.4562V11.0022L54.793 9.50331V9.35342L59.9113 7.2849V19.4562C59.9113 20.2956 60.0592 20.3855 60.9468 20.4455L61.7752 20.5055V21.2249H54.9409V20.5055H54.9113ZM58.3137 0.0600586C58.8165 0.121288 59.2798 0.36711 59.6159 0.751035C59.952 1.13496 60.1376 1.63037 60.1376 2.14357C60.1376 2.65677 59.952 3.15218 59.6159 3.5361C59.2798 3.92003 58.8165 4.16586 58.3137 4.22708C57.7746 4.20379 57.2642 3.97433 56.8854 3.58493C56.5066 3.19554 56.2875 2.67514 56.2723 2.12858C56.2799 1.58239 56.4974 1.06074 56.8786 0.674483C57.2598 0.288227 57.7746 0.0678072 58.3137 0.0600586Z" fill="black"/>
+                            <path d="M63.1955 20.5054L64.0239 20.4454C64.9115 20.3855 65.0594 20.3255 65.0594 19.4562V3.41761L63.0771 2.03859V1.8887L68.1955 0.0300293V19.4861C68.1955 20.3255 68.3138 20.4155 69.231 20.4754L70.0594 20.5354V21.2549H63.2251V20.5054H63.1955Z" fill="black"/>
+                            <path d="M71.4792 20.5055L72.3076 20.4455C73.1656 20.3855 73.3431 20.3256 73.3431 19.4562V11.0022L71.3608 9.50331V9.35342L76.4792 7.2849V19.4562C76.4792 20.2956 76.6271 20.3855 77.5147 20.4455L78.3431 20.5055V21.2249H71.5088V20.5055H71.4792ZM74.8816 0.0600586C75.3844 0.121288 75.8477 0.36711 76.1838 0.751035C76.5199 1.13496 76.7055 1.63037 76.7055 2.14357C76.7055 2.65677 76.5199 3.15218 76.1838 3.5361C75.8477 3.92003 75.3844 4.16586 74.8816 4.22708C74.3424 4.20379 73.8321 3.97433 73.4533 3.58493C73.0744 3.19554 72.8554 2.67514 72.8401 2.12858C72.8478 1.58239 73.0653 1.06074 73.4465 0.674483C73.8277 0.288227 74.3425 0.0678072 74.8816 0.0600586Z" fill="black"/>
+                            <path d="M86.2131 19.9957C86.9859 20.0247 87.7492 19.8157 88.4024 19.3962L88.7575 20.0257C87.6924 20.8651 85.8876 21.4047 84.4083 21.4047C82.1598 21.4047 81.0948 20.7452 81.0948 18.4368V9.50323H78.3433V9.35334L84.0829 4.9165H84.2604V7.82443H89.645L88.58 9.53321H84.2308V17.6874C84.2308 19.4261 85.0297 19.9957 86.2131 19.9957Z" fill="black"/>
+                            <path d="M92.2779 26.5312C92.2779 25.362 93.2838 24.4027 95.9169 23.983L97.1299 21.2849L92.337 9.89304C91.982 9.05364 91.7749 8.72387 90.9169 8.63394L90.3252 8.57398V7.85449H97.2483V8.57398L96.5382 8.63394C95.6802 8.69389 95.414 9.02366 95.7098 9.74314L98.8755 17.4177L102.041 10.3427C102.574 9.14357 102.16 8.69389 101.302 8.63394L100.444 8.57398V7.85449H105.532V8.57398L104.852 8.63394C103.994 8.72387 103.668 9.02366 103.254 9.95299L96.3607 25.332C95.5323 27.1607 94.911 28.0001 93.8163 28.0001C92.8696 27.9701 92.2779 27.3106 92.2779 26.5312Z" fill="black"/>
+                            <path d="M120 5.09631C119.32 1.10915 115.533 -0.929388 111.923 0.539563C108.343 -0.929388 104.527 1.10915 103.846 5.09631H105.562C104.823 1.91858 108.55 -0.629602 111.243 0.839349C110.465 1.26932 109.831 1.92315 109.42 2.71821C109.01 3.51326 108.841 4.41385 108.935 5.30616C109.112 7.28474 110.385 8.84363 111.894 9.95284C113.402 8.84363 114.675 7.28474 114.852 5.30616C115.118 3.50744 114.083 1.70873 112.544 0.839349C115.207 -0.629602 118.965 1.91858 118.225 5.09631H120ZM113.757 5.2462C113.817 6.68517 113.077 8.24406 111.953 9.32329C110.799 8.24406 110.059 6.68517 110.148 5.2462C110.242 3.75409 110.886 2.35234 111.953 1.319C113.018 2.27832 113.639 3.83721 113.757 5.2462Z" fill="black"/>
+                        </g>
+                        <defs><clipPath id="clip_header"><rect width="120" height="28" fill="white"/></clipPath></defs>
+                    </svg>
+                </div>
+
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4 leading-tight">
+                    Marketing Data<br class="hidden sm:block"> Overview
+                </h1>
+                <p class="text-lg md:text-xl text-gray-500 max-w-2xl leading-relaxed">
+                    A plain-English guide to how marketing data flows through the Hertility Health tech stack.
+                    Built for new starters and non-technical colleagues.
+                </p>
+            </div>
+        </header>
+
+
+        <!-- ---- FLOW DIAGRAM ---- -->
+        <section id="flow-diagram" class="py-14 md:py-16 px-6 bg-gray-50 border-y border-gray-100">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-xs font-semibold text-teal-600 uppercase tracking-widest mb-8 text-center">
+                    The Data Pipeline
+                </h2>
+
+                <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-2">
+
+                    <!-- Node: User Action -->
+                    <div class="flex flex-col items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 w-36 md:w-auto md:flex-1 md:max-w-[140px]">
+                        <div class="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-2">
+                            <i data-lucide="mouse-pointer-click" class="w-5 h-5 text-teal-500"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-700 text-center leading-tight">User Action</span>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center text-teal-400 shrink-0">
+                        <i data-lucide="chevron-right" class="w-5 h-5 hidden md:block"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 block md:hidden"></i>
+                    </div>
+
+                    <!-- Node: Cookie Consent -->
+                    <div class="flex flex-col items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 w-36 md:w-auto md:flex-1 md:max-w-[140px]">
+                        <div class="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-2">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-teal-500"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-700 text-center leading-tight">Cookie Consent</span>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center text-teal-400 shrink-0">
+                        <i data-lucide="chevron-right" class="w-5 h-5 hidden md:block"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 block md:hidden"></i>
+                    </div>
+
+                    <!-- Node: Data Layer -->
+                    <div class="flex flex-col items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 w-36 md:w-auto md:flex-1 md:max-w-[140px]">
+                        <div class="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-2">
+                            <i data-lucide="layers" class="w-5 h-5 text-teal-500"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-700 text-center leading-tight">Data Layer</span>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center text-teal-400 shrink-0">
+                        <i data-lucide="chevron-right" class="w-5 h-5 hidden md:block"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 block md:hidden"></i>
+                    </div>
+
+                    <!-- Node: GTM -->
+                    <div class="flex flex-col items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 w-36 md:w-auto md:flex-1 md:max-w-[140px]">
+                        <div class="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-2">
+                            <i data-lucide="git-branch" class="w-5 h-5 text-teal-500"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-700 text-center leading-tight">GTM</span>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center text-teal-400 shrink-0">
+                        <i data-lucide="chevron-right" class="w-5 h-5 hidden md:block"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 block md:hidden"></i>
+                    </div>
+
+                    <!-- Node: Marketing Platforms + GA -->
+                    <div class="flex flex-col items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 w-36 md:w-auto md:flex-1 md:max-w-[140px]">
+                        <div class="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-teal-500"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-700 text-center leading-tight">Platforms + GA</span>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center justify-center text-teal-400 shrink-0">
+                        <i data-lucide="chevron-right" class="w-5 h-5 hidden md:block"></i>
+                        <i data-lucide="chevron-down" class="w-5 h-5 block md:hidden"></i>
+                    </div>
+
+                    <!-- Node: BigQuery -->
+                    <div class="flex flex-col items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 w-36 md:w-auto md:flex-1 md:max-w-[140px]">
+                        <div class="w-10 h-10 rounded-lg bg-teal-50 flex items-center justify-center mb-2">
+                            <i data-lucide="database" class="w-5 h-5 text-teal-500"></i>
+                        </div>
+                        <span class="text-xs font-semibold text-gray-700 text-center leading-tight">BigQuery</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 1: DATA STREAMS ---- -->
+        <section id="section-data-streams" class="py-16 md:py-20 px-6">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">01</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Data Streams</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    Hertility collects data from three platforms — the website, the Android app, and the iPhone app.
+                    Each maps to a Google Analytics data stream, which means you can report on each platform separately or look at the aggregate.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-8 max-w-3xl">
+                    When building reports in GA, it usually makes sense to <strong class="text-gray-800">filter by stream name</strong> so you're looking at the right platform's data.
+                </p>
+
+                <!-- Stream cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
+                        <div class="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                            <i data-lucide="globe" class="w-4 h-4 text-teal-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-800">hertilityhealth.com</p>
+                            <p class="text-xs text-gray-400">Main website</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
+                        <div class="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                            <i data-lucide="globe" class="w-4 h-4 text-teal-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-800">hertilityassessment.com</p>
+                            <p class="text-xs text-gray-400">Assessment flow</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
+                        <div class="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                            <i data-lucide="smartphone" class="w-4 h-4 text-teal-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-800">Production IOS app</p>
+                            <p class="text-xs text-gray-400">iPhone app</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
+                        <div class="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center shrink-0">
+                            <i data-lucide="smartphone" class="w-4 h-4 text-teal-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-800">Production Android app</p>
+                            <p class="text-xs text-gray-400">Android app</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video walkthrough -->
+                <div class="mt-8">
+                    <button onclick="toggleVideo(this)" class="inline-flex items-center gap-2.5 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5
+                                   text-sm font-medium text-gray-600 hover:border-teal-300 hover:text-teal-600 transition-all cursor-pointer">
+                        <i data-lucide="play-circle" class="w-4 h-4 text-teal-500"></i>
+                        <span>Watch: Filtering by stream name in GA</span>
+                    </button>
+                    <div class="video-content mt-3">
+                        <div>
+                            <video controls preload="metadata" class="w-full rounded-xl border border-gray-200">
+                                <source src="assets/hertility_google_analytics.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 2: GOOGLE TAG MANAGER ---- -->
+        <section id="section-gtm" class="py-16 md:py-20 px-6 bg-gray-50 border-y border-gray-100">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">02</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Google Tag Manager</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    Google Tag Manager (GTM) is the <strong class="text-gray-800">central routing layer</strong> in the data pipeline.
+                    When a user takes an action on the website or app, GTM picks up the event and sends it to the right marketing platforms.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    GTM currently routes data to Google Analytics, Google Ads, Meta (Facebook/Instagram), LinkedIn, Pinterest, Awin, and others.
+                    Rather than hard-coding tracking on each platform individually, GTM lets the team manage all tags from one place.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-6 max-w-3xl">
+                    The full list of active tags and their status is maintained in the Marketing Tags Tracker.
+                </p>
+
+                <!-- Notion link callout -->
+                <a href="https://www.notion.so/host-digital/Marketing-Tags-Tracker-Document-182797554f6e4abcb3f5fa6ef381abbe"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   id="notion-tracker-link"
+                   class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-5 py-3
+                          text-sm font-medium text-teal-600 hover:border-teal-300 hover:shadow-sm transition-all group">
+                    <i data-lucide="external-link" class="w-4 h-4 text-teal-400 group-hover:text-teal-500 transition-colors"></i>
+                    Open Marketing Tags Tracker
+                </a>
+
+                <!-- Video walkthrough -->
+                <div class="mt-8">
+                    <button onclick="toggleVideo(this)" class="inline-flex items-center gap-2.5 bg-white border border-gray-200 rounded-xl px-4 py-2.5
+                                   text-sm font-medium text-gray-600 hover:border-teal-300 hover:text-teal-600 transition-all cursor-pointer">
+                        <i data-lucide="play-circle" class="w-4 h-4 text-teal-500"></i>
+                        <span>Watch: The GTM interface</span>
+                    </button>
+                    <div class="video-content mt-3">
+                        <div>
+                            <video controls preload="metadata" class="w-full rounded-xl border border-gray-200">
+                                <source src="assets/hertility_google_tag_manager.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 3: GOOGLE ANALYTICS & BIGQUERY ---- -->
+        <section id="section-ga-bigquery" class="py-16 md:py-20 px-6">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">03</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Google Analytics &amp; BigQuery</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    Google Analytics (GA) is the <strong class="text-gray-800">primary reporting tool</strong>.
+                    It powers key business reports including the "Infinity Loop" report and other business-critical dashboards.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    GA data is exported daily to <strong class="text-gray-800">BigQuery</strong> — Google's data warehouse.
+                    The Engineering team writes SQL queries to model this raw data for upstream reporting and analysis.
+                </p>
+                <p class="text-gray-600 leading-relaxed max-w-3xl">
+                    Sometimes the GA user interface can't answer a specific question. When that happens, the raw BigQuery data is the
+                    go-to resource — it contains everything GA captures, in a queryable format.
+                </p>
+
+                <!-- Video walkthrough -->
+                <div class="mt-8">
+                    <button onclick="toggleVideo(this)" class="inline-flex items-center gap-2.5 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5
+                                   text-sm font-medium text-gray-600 hover:border-teal-300 hover:text-teal-600 transition-all cursor-pointer">
+                        <i data-lucide="play-circle" class="w-4 h-4 text-teal-500"></i>
+                        <span>Watch: Raw data inside BigQuery</span>
+                    </button>
+                    <div class="video-content mt-3">
+                        <div>
+                            <video controls preload="metadata" class="w-full rounded-xl border border-gray-200">
+                                <source src="assets/hertility_bigquery.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 4: ENGINEERING & THE DATA LAYER ---- -->
+        <section id="section-data-layer" class="py-16 md:py-20 px-6 bg-gray-50 border-y border-gray-100">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">04</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Engineering &amp; the Data Layer</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    The data layer is a JavaScript object (<code class="text-sm bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded">dataLayer</code>) that lives on the website. Engineering implements data layer pushes to capture specific user interactions — things like video engagements, button clicks, and form submissions.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    When Engineering adds a new <code class="text-sm bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded">dataLayer.push()</code> event, GTM can be instrumented to listen for it and routes the data to the appropriate marketing platforms.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-8 max-w-3xl">
+                    This keeps tracking clean and maintainable — the website code only needs to "announce" what happened,
+                    and GTM handles the rest.
+                </p>
+
+                <!-- Code example -->
+                <div class="max-w-3xl">
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Example</p>
+                    <pre class="bg-gray-900 text-gray-100 rounded-xl p-5 text-sm leading-relaxed overflow-x-auto"><code><span class="text-gray-500">// When a user clicks a CTA button, Engineering pushes</span>
+<span class="text-gray-500">// an event to the data layer:</span>
+
+dataLayer.<span class="text-teal-300">push</span>({
+  <span class="text-amber-300">event</span>: <span class="text-green-300">'cta_click'</span>,
+  <span class="text-amber-300">button_text</span>: <span class="text-green-300">'Book a Test'</span>,
+  <span class="text-amber-300">page_section</span>: <span class="text-green-300">'hero'</span>
+});
+
+<span class="text-gray-500">// GTM picks this up and sends it to GA, Google Ads,</span>
+<span class="text-gray-500">// Meta, etc. — no extra code needed on the website.</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 5: SERVER-SIDE TRACKING & STAPE ---- -->
+        <section id="section-server-side" class="py-16 md:py-20 px-6">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">05</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Server-side Tracking &amp; Stape</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    In a traditional setup, marketing data is sent directly from the user's browser to each platform — Google Analytics, Meta, Google Ads, and so on. This is called <strong class="text-gray-800">client-side tracking</strong>, and it's how most websites work. The problem is that browsers are getting stricter. Ad blockers, iOS privacy changes, and shorter cookie lifespans all chip away at the data that actually makes it through.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    <strong class="text-gray-800">Server-side tracking</strong> adds a middle step. Instead of the browser talking directly to every platform, it sends data to a server that Hertility controls first. That server then forwards the data onward to Google Analytics, Google Ads, Meta, and the rest. Because the data passes through Hertility's own infrastructure, it's less likely to be blocked or lost along the way.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    In the context of GTM, client-side tracking is handled by your <strong class="text-gray-800">GTM web container</strong>, whilst server-side tracking is handled by your <strong class="text-gray-800">GTM server container</strong>.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    Hertility runs its server-side container through a service called <strong class="text-gray-800">Stape</strong>. Stape hosts and manages the server-side GTM environment so that Hertility's Engineering team doesn't need to maintain the servers themselves.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    In practice, the flow looks like this: a user takes an action on the website → the browser-side GTM container picks it up → instead of sending data straight to Meta or Google, it sends it to the Stape-hosted server → the server processes and forwards it to the final platforms.
+                </p>
+                <p class="text-gray-600 leading-relaxed max-w-3xl">
+                    Day-to-day, you don't need to interact with Stape directly — it runs in the background. But it's worth knowing it exists. It's also worth knowing that there are <strong class="text-gray-800">two GTM containers</strong> — a client-side container that runs in the user's browser and a server-side container hosted by Stape that receives data from the web container and forwards it on to the platforms.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 6: WEBSITE PLATFORM COMPLEXITY ---- -->
+        <section id="section-platforms" class="py-16 md:py-20 px-6 bg-gray-50 border-y border-gray-100">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">06</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Website Platform Complexity</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    The Hertility website isn't a single platform — it spans three. This means marketing tags and tracking need to work
+                    across all of them. GTM is loaded on each platform to ensure consistent data collection regardless of where the user is.
+                </p>
+
+                <!-- Platform cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8">
+                    <div class="bg-gray-50 rounded-xl border border-gray-100 p-5">
+                        <div class="w-9 h-9 rounded-lg bg-teal-50 flex items-center justify-center mb-3">
+                            <i data-lucide="megaphone" class="w-4.5 h-4.5 text-teal-500"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-gray-800 mb-1">HubSpot</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">Blog, landing pages, and marketing content. Managed by the Marketing team.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl border border-gray-100 p-5">
+                        <div class="w-9 h-9 rounded-lg bg-teal-50 flex items-center justify-center mb-3">
+                            <i data-lucide="shopping-cart" class="w-4.5 h-4.5 text-teal-500"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-gray-800 mb-1">Shopify</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">Checkout page (but not the Thank You page).</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl border border-gray-100 p-5">
+                        <div class="w-9 h-9 rounded-lg bg-teal-50 flex items-center justify-center mb-3">
+                            <i data-lucide="code-2" class="w-4.5 h-4.5 text-teal-500"></i>
+                        </div>
+                        <h3 class="text-sm font-bold text-gray-800 mb-1">Custom-built</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">Bespoke pages and features built by the Engineering team (includes the post-checkout Thank You page).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ---- SECTION 7: COOKIE CONSENT ---- -->
+        <section id="section-cookie-consent" class="py-16 md:py-20 px-6">
+            <div class="max-w-4xl mx-auto fade-up">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-xs font-bold text-teal-500 bg-teal-50 px-2.5 py-1 rounded-full tracking-wide">07</span>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Cookie Consent</h2>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    No marketing data fires unless the user consents. The <strong class="text-gray-800">CookieBot (UserCentrics)</strong> cookie banner appears when a user first visits, and their choice determines what data is collected.
+                </p>
+                <p class="text-gray-600 leading-relaxed mb-4 max-w-3xl">
+                    If a user declines cookies, marketing tags do not fire — no data is sent to Google Analytics, Google Ads, Meta, or any other platform. Only users who consent are tracked. 
+
+                </p>
+                <p class="text-gray-600 leading-relaxed max-w-3xl">
+                    Cookie consent  is managed by GTM, which effectively 'links' user consent preferences to the marketing triggers.This is the <strong class="text-gray-800">very first gate</strong> in the data pipeline: before anything else happens, consent must be given.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- ---- FOOTER ---- -->
+        <footer class="py-10 px-6 border-t border-gray-100">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-sm text-gray-400">Hertility Health — Internal Reference</p>
+                <p class="text-xs text-gray-300 mt-1">Maintained by Host Digital</p>
+            </div>
+        </footer>
+
+    </div><!-- /main-content -->
+
+
+    <!-- ======================== SCRIPTS ======================== -->
+    <script>
+        // --- Password gate ---
+        var CORRECT_PASSWORD = 'health';
+        var STORAGE_KEY = 'hertility_auth';
+
+        function showContent() {
+            var gate = document.getElementById('password-gate');
+            var content = document.getElementById('main-content');
+            gate.classList.add('gate-hidden');
+            content.style.display = '';
+            // Trigger reflow then fade in
+            requestAnimationFrame(function() {
+                content.classList.add('visible');
+            });
+        }
+
+        // Check sessionStorage on load
+        if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
+            showContent();
+        }
+
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var input = document.getElementById('password-input');
+            if (input.value === CORRECT_PASSWORD) {
+                sessionStorage.setItem(STORAGE_KEY, 'true');
+                showContent();
+            } else {
+                input.classList.add('shake');
+                document.getElementById('password-error').classList.remove('hidden');
+                input.value = '';
+                setTimeout(function() { input.classList.remove('shake'); }, 400);
+            }
+        });
+
+        // --- Video toggle ---
+        function toggleVideo(btn) {
+            var content = btn.nextElementSibling;
+            var isOpen = content.classList.contains('open');
+            content.classList.toggle('open');
+
+            // Pause video when collapsing
+            if (isOpen) {
+                var video = content.querySelector('video');
+                if (video) video.pause();
+            }
+        }
+
+        // --- Lucide icons ---
+        lucide.createIcons();
+
+        // --- Scroll-triggered fade-up ---
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(function(el) {
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>

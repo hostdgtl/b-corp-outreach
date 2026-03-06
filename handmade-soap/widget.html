@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B Corp Widget - Local Dev</title>
+  <link rel="stylesheet" href="widget.css">
+</head>
+<body>
+
+<!-- The widget renders here -->
+<div id="bcorp-widget"></div>
+
+<!-- Optional: override defaults per client -->
+<script>
+  window.BCORP_CONFIG = {
+    brandName: 'The Handmade Soap Company',
+    brandLogo: 'assets/handmade.avif',
+    bcorpLogo: 'assets/b-corp-logo.png',
+    overallScore: 94.1,
+    certificationDate: 'October 2022',
+    qualifyingScore: 80,
+    medianScore: 50.9,
+    governance: 17.4,
+    workers: 20.5,
+    community: 20.8,
+    environment: 32.0,
+    customers: 3.1,
+    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/the-handmade-soap-company/'
+  };
+</script>
+<script src="widget.js"></script>
+
+</body>
+</html>
