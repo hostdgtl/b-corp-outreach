@@ -170,6 +170,11 @@
     '</div>';
   }
 
+  // Move modal overlay to document.body so it escapes any stacking context
+  // (e.g. Shopify themes where <main> has position:relative + z-index)
+  var modalOverlay = container.querySelector('.bcorp-modal-overlay');
+  if (modalOverlay) document.body.appendChild(modalOverlay);
+
   // ---- Interactivity ----
   var trigger = document.getElementById('bcorp-trigger');
   var modal = document.getElementById('bcorp-modal');

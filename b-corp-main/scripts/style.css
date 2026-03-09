@@ -246,7 +246,7 @@
 }
 
 .bcorp-modal {
-  background: var(--bcorp-bg);
+  background: var(--bcorp-bg, #ffffff);
   border-radius: var(--bcorp-radius);
   max-width: 480px;
   width: 100%;
