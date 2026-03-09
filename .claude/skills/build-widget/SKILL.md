@@ -86,23 +86,76 @@ Create a file at `{Company-Name}\console-script.js` using this template. Replace
   widgetScript.src = 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/b-corp-main/scripts/app.js';
   document.body.appendChild(widgetScript);
 
+  // After app.js loads, move modal overlay to body and set z-index
+  // (belt-and-suspenders — CDN may serve stale app.js without this fix)
+  widgetScript.addEventListener('load', () => {
+    const overlay = document.querySelector('.bcorp-modal-overlay');
+    if (overlay && overlay.parentElement !== document.body) {
+      document.body.appendChild(overlay);
+    }
+    if (overlay) {
+      overlay.style.zIndex = '999999';
+    }
+  });
+
   const style = document.createElement('style');
   style.innerHTML = `
+    /* Font & text isolation */
     #bcorp-widget, #bcorp-widget *, .bcorp-modal-overlay, .bcorp-modal-overlay * {
       font-family: 'Inter', sans-serif !important;
       text-transform: none !important;
       letter-spacing: normal !important;
       word-spacing: normal !important;
     }
-    .bcorp-category__fill {
-      display: block !important;
+
+    /* Modal overlay — hardcoded custom properties (survives CDN caching & theme resets) */
+    .bcorp-modal-overlay {
+      --bcorp-primary: #1a472a;
+      --bcorp-primary-light: #2d5a3d;
+      --bcorp-accent: #8bc34a;
+      --bcorp-accent-light: #c5e1a5;
+      --bcorp-bg: #ffffff;
+      --bcorp-bg-secondary: #f8f9fa;
+      --bcorp-text: #1a1a1a;
+      --bcorp-text-muted: #6c757d;
+      --bcorp-border: #e0e0e0;
+      --bcorp-radius: 12px;
+      --bcorp-radius-sm: 8px;
+      --bcorp-governance: #1a472a;
+      --bcorp-workers: #2d6a4f;
+      --bcorp-community: #40916c;
+      --bcorp-environment: #52b788;
+      --bcorp-customers: #74c69d;
     }
-    .bcorp-modal-overlay.active .bcorp-category__fill {
-      width: var(--width) !important;
-    }
+
+    /* Modal chrome */
+    .bcorp-modal { border-radius: 12px !important; background: #ffffff !important; }
+    .bcorp-modal__header { border-bottom: 1px solid #e0e0e0 !important; }
+    .bcorp-modal__description { border-bottom: 1px solid #e0e0e0 !important; }
+    .bcorp-score-section { border-bottom: 1px solid #e0e0e0 !important; }
+    .bcorp-score-section__inner { border-radius: 16px !important; }
+    .bcorp-breakdown { border-bottom: 1px solid #e0e0e0 !important; }
+    .bcorp-benchmark { border-radius: 10px !important; }
+
+    /* Category bar gradients */
+    .bcorp-category__fill { display: block !important; }
+    .bcorp-modal-overlay.active .bcorp-category__fill { width: var(--width) !important; }
+    .bcorp-category--governance .bcorp-category__fill { background: linear-gradient(90deg, #1a472a, #8bc34a) !important; }
+    .bcorp-category--workers .bcorp-category__fill { background: linear-gradient(90deg, #2d6a4f, #8bc34a) !important; }
+    .bcorp-category--community .bcorp-category__fill { background: linear-gradient(90deg, #40916c, #8bc34a) !important; }
+    .bcorp-category--environment .bcorp-category__fill { background: linear-gradient(90deg, #52b788, #8bc34a) !important; }
+    .bcorp-category--customers .bcorp-category__fill { background: linear-gradient(90deg, #74c69d, #8bc34a) !important; }
+
+    /* Progress ring */
+    .bcorp-progress-ring__bg { stroke: #e8e8e8 !important; fill: none !important; }
+    .bcorp-progress-ring__progress { stroke: #1a472a !important; fill: none !important; }
     .bcorp-modal-overlay.active .bcorp-progress-ring__progress {
       stroke-dashoffset: calc(295.31 - (295.31 * var(--progress) / 100)) !important;
     }
+
+    /* Proof section */
+    .bcorp-proof { background: #f8f9fa !important; border-left: 4px solid #1a472a !important; border-radius: 0 8px 8px 0 !important; }
+    .bcorp-proof__link { border: 2px solid #1a472a !important; border-radius: 50px !important; color: #1a472a !important; }
   `;
   document.head.appendChild(style);
 
