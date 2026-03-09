@@ -102,6 +102,21 @@ In the new folder's `scripts/app.js`, update the BCORP_CONFIG defaults to match 
 ### Step 7: Update index.html for local preview
 The template's `index.html` has its own inline `BCORP_CONFIG` block that overrides the `app.js` defaults. Update all config values in `index.html` to match this company's data — brand name, logo path (relative: `assets/{Company-Name}-Logo.{ext}`), scores, certification date, and profile URL. If this step is skipped, the local preview will show the template's placeholder data instead of the prospect's.
 
+### Step 8: Output the console script in a markdown file
+After all files are saved, create a markdown file at `C:\Users\alan\Desktop\Outreach\{Company-Name}\console-script.md` containing the full console script in a fenced JavaScript code block. This is what Host Digital will copy from to paste into the browser console on the prospect's website to record the demo video. The script must be ready to paste — no placeholders, no instructions, just the working script in a code block.
+
+### Step 9: Commit and push to GitHub
+The console script references brand logos via jsDelivr, which serves files from this GitHub repo. The logo won't render until the new folder is pushed. Commit the new company folder and push to `main`:
+
+```bash
+cd "C:\Users\alan\Desktop\Outreach"
+git add "{Company-Name}/"
+git commit -m "Add {Company Name} widget and console script"
+git push origin main
+```
+
+This makes the logo and any other assets available at `https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/{Company-Name}/assets/...` immediately (jsDelivr picks up new files quickly; cached files may take up to 12 hours to refresh).
+
 ### Boundaries
 
 **Do not modify the `b-corp-main/` template folder** — only duplicate it. This is the master template that all future widgets are built from. Changes here would silently propagate to every subsequent prospect, potentially breaking working widgets or introducing unreviewed changes.
@@ -109,8 +124,6 @@ The template's `index.html` has its own inline `BCORP_CONFIG` block that overrid
 **Do not edit any files outside the new company folder.** Other company folders contain finalised or in-progress work for other prospects. The master template, other customer folders, and shared config are all off-limits. This skill creates one self-contained folder per prospect.
 
 **Do not alter the widget code beyond what's specified in the instructions** (config values, logo reference, console script generation). The widget's behaviour, styling, and structure are already tested and proven. "Improving" the widget for one prospect creates inconsistency across the portfolio and introduces untested changes into what gets shown to a real prospect.
-
-**Do not push to GitHub unless explicitly requested.** Host Digital reviews all changes locally before committing. An unprompted push could deploy incomplete work or expose prospect data before it's ready.
 
 **Do not create or fabricate a logo** (e.g. generating one with AI or building a placeholder). Source and download the company's actual brand logo from their website or the web. SVG is preferred, then high-quality PNG. If only a low-res or questionable version is available, download it but flag it to Host Digital — they may want to source a better version before recording the demo.
 

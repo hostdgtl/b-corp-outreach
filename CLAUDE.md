@@ -161,6 +161,19 @@ For demoing the widget on any webpage (inject via Chrome DevTools console):
 - Name: `hostdigitaldata`
 - Email: `hostinsight@gmail.com`
 
+## Pipeline Skills
+
+These skills handle the outreach pipeline. **Always invoke the matching skill** rather than doing the work manually.
+
+| File Path | Command | Function / Description |
+|-----------|---------|------------------------|
+| `.claude/skills/prospect/SKILL.md` | `/prospect` | Check traffic + Shopify |
+| `.claude/skills/find-contacts/SKILL.md` | `/find-contacts` | Hunter.io email lookup |
+| `.claude/skills/build-widget/SKILL.md` | `/build-widget` | Create personalised widget + console script |
+| `.claude/skills/draft-outreach/SKILL.md` | `/draft-outreach` | Create Gmail drafts for review |
+
+**Rule:** If a user request matches one of these skills — even if they don't use the slash command — invoke the skill. For example, "create a widget for Acme Co" should trigger `/build-widget`, and "find email for Acme Co" should trigger `/find-contacts`.
+
 ## Important Notes
 
 1. **CDN_BASE** in `app.js` — each customer's `app.js` may reference assets via CDN_BASE. For jsDelivr serving, logo paths in `console-script.js` use the full jsDelivr URL
