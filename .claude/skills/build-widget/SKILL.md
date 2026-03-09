@@ -87,7 +87,23 @@ Create a file at `{Company-Name}\console-script.js` using this template. Replace
   document.body.appendChild(widgetScript);
 
   const style = document.createElement('style');
-  style.innerHTML = `#bcorp-widget, #bcorp-widget * { font-family: 'Inter', sans-serif !important; }`;
+  style.innerHTML = `
+    #bcorp-widget, #bcorp-widget *, .bcorp-modal-overlay, .bcorp-modal-overlay * {
+      font-family: 'Inter', sans-serif !important;
+      text-transform: none !important;
+      letter-spacing: normal !important;
+      word-spacing: normal !important;
+    }
+    .bcorp-category__fill {
+      display: block !important;
+    }
+    .bcorp-modal-overlay.active .bcorp-category__fill {
+      width: var(--width) !important;
+    }
+    .bcorp-modal-overlay.active .bcorp-progress-ring__progress {
+      stroke-dashoffset: calc(295.31 - (295.31 * var(--progress) / 100)) !important;
+    }
+  `;
   document.head.appendChild(style);
 
   console.log("Widget successfully re-injected!");

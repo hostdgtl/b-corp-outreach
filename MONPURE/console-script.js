@@ -44,6 +44,9 @@
       letter-spacing: normal !important;
       word-spacing: normal !important;
     }
+    .bcorp-category__fill {
+      display: block !important;
+    }
     .bcorp-modal-overlay.active .bcorp-category__fill {
       width: var(--width) !important;
     }
