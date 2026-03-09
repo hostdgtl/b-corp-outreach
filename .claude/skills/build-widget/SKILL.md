@@ -155,7 +155,8 @@ Create a file at `{Company-Name}\console-script.js` using this template. Replace
 
     /* Proof section */
     .bcorp-proof { background: #f8f9fa !important; border-left: 4px solid #1a472a !important; border-radius: 0 8px 8px 0 !important; }
-    .bcorp-proof__link { border: 2px solid #1a472a !important; border-radius: 50px !important; color: #1a472a !important; }
+    .bcorp-proof__link { border: 2px solid #1a472a !important; border-radius: 50px !important; color: #1a472a !important; text-decoration: none !important; }
+    .bcorp-proof__link:hover { background: #1a472a !important; color: #ffffff !important; }
   `;
   document.head.appendChild(style);
 
