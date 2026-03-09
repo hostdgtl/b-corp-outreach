@@ -171,6 +171,7 @@ These skills handle the outreach pipeline. **Always invoke the matching skill** 
 | `.claude/skills/find-contacts/SKILL.md` | `/find-contacts` | Hunter.io email lookup |
 | `.claude/skills/build-widget/SKILL.md` | `/build-widget` | Create personalised widget + console script |
 | `.claude/skills/draft-outreach/SKILL.md` | `/draft-outreach` | Create Gmail drafts for review |
+| `.claude/skills/inject-widget/SKILL.md` | `/inject-widget` | Inject widget into prospect's live Shopify site via Playwright |
 
 **Rule:** If a user request matches one of these skills — even if they don't use the slash command — invoke the skill. For example, "create a widget for Acme Co" should trigger `/build-widget`, and "find email for Acme Co" should trigger `/find-contacts`.
 
