@@ -60,47 +60,61 @@ After clicking, use `browser_snapshot` to confirm you're on a product page. A Sh
 
 If the first attempt doesn't land on a product page, try again with a different link. If after 3 attempts you can't reach a product page, stop and tell Host Digital — the site may have an unusual structure.
 
-### Step 5: Find the product form and insert the widget container div
+### Step 5: Find the right insertion point and insert the widget container div
 
-Use `browser_evaluate` to insert the widget container div **after** the product form element:
+The widget must be placed **outside** any width-constrained containers so it spans the full page width. It should sit below all salient product information (title, price, description, add-to-cart, accordions) but above the follow-up sections (testimonials, social proof, "voted best…", before/after photos, etc.).
+
+**Strategy:** Inspect `<main>`'s direct children — Shopify themes typically use `shopify-section` divs as top-level siblings. Use `browser_evaluate` to enumerate them with their headings to identify:
+1. The **product section** — contains the product title (`<h1>`), add-to-cart form, and product details
+2. The **first follow-up section** — usually contains testimonial headings, "voted best…", stats, or before/after images
+
+Insert the widget div as a direct child of `<main>`, between the product section and the first follow-up section.
 
 ```javascript
 (() => {
-  const selectors = [
-    'form[action*="/cart/add"]',
-    'product-form',
-    '.product-form',
-    '[data-product-form]',
-    '.product__form'
-  ];
+  const main = document.querySelector('main') || document.querySelector('[role="main"]');
+  if (!main) return 'ERROR: no main element found';
 
-  let target = null;
-  for (const sel of selectors) {
-    target = document.querySelector(sel);
-    if (target) break;
+  const children = Array.from(main.children);
+
+  // Find the product section: the one containing the product form or h1
+  let productIdx = children.findIndex(c =>
+    c.querySelector('form[action*="/cart/add"]') ||
+    c.querySelector('product-form') ||
+    c.querySelector('.product-form') ||
+    c.querySelector('[data-product-form]')
+  );
+
+  // Fallback: find the section with the h1 (product title)
+  if (productIdx === -1) {
+    productIdx = children.findIndex(c => c.querySelector('h1'));
   }
 
-  if (!target) {
-    const cartBtn = Array.from(document.querySelectorAll('button, input[type="submit"]'))
-      .find(el => /add to (cart|bag|basket)/i.test(el.textContent || el.value));
-    if (cartBtn) target = cartBtn.closest('form') || cartBtn.parentElement;
-  }
+  if (productIdx === -1) return 'ERROR: could not identify product section';
+
+  const insertBeforeEl = children[productIdx + 1] || null;
 
   const widgetDiv = document.createElement('div');
   widgetDiv.id = 'bcorp-widget';
 
-  if (target) {
-    target.insertAdjacentElement('afterend', widgetDiv);
-    return 'Inserted after: ' + (target.tagName + (target.className ? '.' + target.className.split(' ')[0] : ''));
+  if (insertBeforeEl) {
+    main.insertBefore(widgetDiv, insertBeforeEl);
   } else {
-    const main = document.querySelector('main') || document.querySelector('[role="main"]') || document.body;
     main.appendChild(widgetDiv);
-    return 'Fallback: appended to main content (no product form found)';
   }
+
+  const nextDesc = insertBeforeEl
+    ? (Array.from(insertBeforeEl.querySelectorAll('h2,h3')).map(h => h.textContent.trim().substring(0, 50)).join(', ') || 'unnamed section')
+    : 'end of main';
+
+  return 'Inserted as direct child of main, after product section (index ' + productIdx + '), before: ' + nextDesc;
 })()
 ```
 
-**Important:** Do NOT rely on the console-script's `document.body.prepend` fallback. Placing the widget after the product form looks natural and professional for the demo video.
+**Key principles:**
+- The widget must be a **direct child of `<main>`**, not nested inside a product form or constrained column. This ensures it spans the full page width like the sections around it.
+- Do NOT insert inside the product form or immediately after the add-to-cart button — that places it inside a width-constrained column.
+- If the page structure is unusual, use `browser_snapshot` to inspect and pick the right insertion point manually.
 
 ### Step 6: Read and execute the console script
 
@@ -157,6 +171,7 @@ Tell Host Digital:
 ## Judgment calls
 
 - **Product page selection matters.** Pick a product with a good visual layout — hero image, clear product form, and enough space below the form. Avoid "coming soon" products.
+- **Widget positioning is critical.** The widget must sit outside any width-constrained containers (columns, grid cells, product form wrappers). It should be a direct child of `<main>`, positioned below all core product information (title, price, description, add-to-cart, accordions like "Description", "Ingredients", etc.) but above the follow-up value-proposition sections (testimonials, "voted best…", before/after photos, stats, reviews). Use `browser_evaluate` to enumerate `<main>`'s direct children with their headings to identify the correct insertion point. Every Shopify theme structures this differently — inspect first, then insert.
 - **If the site has a cookie consent banner** or popup, dismiss it first using `browser_click` before proceeding.
 - **If the site has age verification or password protection**, stop and tell Host Digital — they'll handle it manually.
 - **The 3-second wait is a minimum.** If the widget div is empty after the snapshot check, wait a few more seconds and check again — jsDelivr may be slow on first load.
