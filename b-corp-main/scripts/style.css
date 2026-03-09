@@ -39,7 +39,10 @@
 
 .bcorp-widget *,
 .bcorp-widget *::before,
-.bcorp-widget *::after {
+.bcorp-widget *::after,
+.bcorp-modal-overlay *,
+.bcorp-modal-overlay *::before,
+.bcorp-modal-overlay *::after {
   font-family: var(--bcorp-font) !important;
 }
 
@@ -224,8 +227,29 @@
 
 /* ============================================
    MODAL OVERLAY (State 2)
+   The overlay is moved to document.body via JS to escape
+   stacking contexts, so it needs its own custom properties.
    ============================================ */
 .bcorp-modal-overlay {
+  --bcorp-primary: #1a472a;
+  --bcorp-primary-light: #2d5a3d;
+  --bcorp-accent: #8bc34a;
+  --bcorp-accent-light: #c5e1a5;
+  --bcorp-bg: #ffffff;
+  --bcorp-bg-secondary: #f8f9fa;
+  --bcorp-text: #1a1a1a;
+  --bcorp-text-muted: #6c757d;
+  --bcorp-border: #e0e0e0;
+  --bcorp-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --bcorp-radius: 12px;
+  --bcorp-radius-sm: 8px;
+  --bcorp-font: 'Inter var', 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --bcorp-governance: #1a472a;
+  --bcorp-workers: #2d6a4f;
+  --bcorp-community: #40916c;
+  --bcorp-environment: #52b788;
+  --bcorp-customers: #74c69d;
+
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -238,6 +262,8 @@
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+  font-family: var(--bcorp-font) !important;
+  font-size: 16px !important;
 }
 
 .bcorp-modal-overlay.active {
