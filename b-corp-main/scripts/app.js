@@ -173,7 +173,36 @@
   // Move modal overlay to document.body so it escapes any stacking context
   // (e.g. Shopify themes where <main> has position:relative + z-index)
   var modalOverlay = container.querySelector('.bcorp-modal-overlay');
-  if (modalOverlay) document.body.appendChild(modalOverlay);
+  if (modalOverlay) {
+    document.body.appendChild(modalOverlay);
+
+    // Set CSS custom properties directly on the overlay element so they're
+    // available to all descendants regardless of stylesheet caching or
+    // host theme interference.
+    var props = {
+      '--bcorp-primary': '#1a472a',
+      '--bcorp-primary-light': '#2d5a3d',
+      '--bcorp-accent': '#8bc34a',
+      '--bcorp-accent-light': '#c5e1a5',
+      '--bcorp-bg': '#ffffff',
+      '--bcorp-bg-secondary': '#f8f9fa',
+      '--bcorp-text': '#1a1a1a',
+      '--bcorp-text-muted': '#6c757d',
+      '--bcorp-border': '#e0e0e0',
+      '--bcorp-shadow': '0 4px 20px rgba(0, 0, 0, 0.1)',
+      '--bcorp-radius': '12px',
+      '--bcorp-radius-sm': '8px',
+      '--bcorp-font': "'Inter var', 'Inter', ui-sans-serif, system-ui, sans-serif",
+      '--bcorp-governance': '#1a472a',
+      '--bcorp-workers': '#2d6a4f',
+      '--bcorp-community': '#40916c',
+      '--bcorp-environment': '#52b788',
+      '--bcorp-customers': '#74c69d'
+    };
+    for (var p in props) {
+      if (props.hasOwnProperty(p)) modalOverlay.style.setProperty(p, props[p]);
+    }
+  }
 
   // ---- Interactivity ----
   var trigger = document.getElementById('bcorp-trigger');
