@@ -50,23 +50,26 @@
    TRIGGER BADGE (State 1) - Desktop Trust Bar
    ============================================ */
 .bcorp-trigger {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 20px 28px;
-  background: var(--bcorp-bg);
-  border: 1px solid #EBEBEB;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  padding: 20px 28px !important;
+  background: #ffffff !important;
+  border: 1px solid #EBEBEB !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: var(--bcorp-font);
-  font-size: 16px;
+  font-family: var(--bcorp-font) !important;
+  font-size: 16px !important;
   width: 100%;
   max-width: 600px;
-  text-align: left;
+  text-align: left !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: #1a1a1a !important;
 }
 
 .bcorp-trigger:hover {
@@ -100,18 +103,24 @@
 }
 
 .bcorp-trigger__title {
-  font-family: var(--bcorp-font);
-  font-size: 1.375em;
-  font-weight: 700;
-  color: var(--bcorp-text);
-  line-height: 1.2;
+  font-family: var(--bcorp-font) !important;
+  font-size: 1.375em !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  line-height: 1.2 !important;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-trigger__description {
-  font-size: 0.9375em;
-  color: var(--bcorp-text);
-  line-height: 1.5;
-  font-weight: 500;
+  font-size: 0.9375em !important;
+  color: #1a1a1a !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-trigger__learn-more {
@@ -208,12 +217,12 @@
 .bcorp-trigger__brand-logo {
   width: 64px;
   height: 64px;
-  border: 1.5px solid #A8A29E;
-  border-radius: 50%;
+  border: 1.5px solid #A8A29E !important;
+  border-radius: 50% !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bcorp-bg);
+  background: #ffffff !important;
   padding: 4px;
 }
 
@@ -272,17 +281,20 @@
 }
 
 .bcorp-modal {
-  background: var(--bcorp-bg, #ffffff);
-  border-radius: var(--bcorp-radius);
+  background: #ffffff !important;
+  border-radius: 12px !important;
   max-width: 480px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
   transform: translateY(20px) scale(0.95);
   transition: transform 0.3s ease;
-  font-family: var(--bcorp-font);
-  font-size: 16px;
+  font-family: var(--bcorp-font) !important;
+  font-size: 16px !important;
+  color: #1a1a1a !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-modal-overlay.active .bcorp-modal {
@@ -291,19 +303,21 @@
 
 /* Modal Header */
 .bcorp-modal__header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px 20px 16px;
-  border-bottom: 1px solid var(--bcorp-border);
-  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 20px 20px 16px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  position: relative !important;
+  background: #ffffff !important;
+  border-radius: 12px 12px 0 0 !important;
 }
 
 .bcorp-modal__logo {
-  width: 64px;
-  height: 64px;
+  width: 64px !important;
+  height: 64px !important;
   flex-shrink: 0;
-  object-fit: contain;
+  object-fit: contain !important;
 }
 
 .bcorp-modal__header-content {
@@ -314,20 +328,26 @@
 }
 
 .bcorp-modal__title {
-  font-size: 1.25em;
-  font-weight: 700;
-  color: var(--bcorp-text);
-  margin: 0 0 4px;
-  line-height: 1.2;
+  font-size: 1.25em !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin: 0 0 4px !important;
+  line-height: 1.2 !important;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-modal__subtitle {
-  font-size: 0.8125em;
-  color: var(--bcorp-text-muted);
-  margin: 0;
+  font-size: 0.8125em !important;
+  color: #6c757d !important;
+  margin: 0 !important;
   display: flex;
   align-items: center;
   gap: 6px;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-modal__subtitle-check {
@@ -342,11 +362,11 @@
   right: 16px;
   width: 32px;
   height: 32px;
-  border: none;
-  background: transparent;
+  border: none !important;
+  background: transparent !important;
   cursor: pointer;
-  color: var(--bcorp-text-muted);
-  border-radius: 50%;
+  color: #6c757d !important;
+  border-radius: 50% !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -354,33 +374,37 @@
 }
 
 .bcorp-modal__close:hover {
-  background: var(--bcorp-bg-secondary);
-  color: var(--bcorp-text);
+  background: #f8f9fa !important;
+  color: #1a1a1a !important;
 }
 
 /* Modal Description */
 .bcorp-modal__description {
-  padding: 16px 20px;
-  font-size: 0.875em;
-  color: var(--bcorp-text-muted);
-  line-height: 1.5;
-  border-bottom: 1px solid var(--bcorp-border);
+  padding: 16px 20px !important;
+  font-size: 0.875em !important;
+  color: #6c757d !important;
+  line-height: 1.5 !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  background: #ffffff !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 /* Score Section - Cohesive Card Group */
 .bcorp-score-section {
-  padding: 24px 20px;
-  border-bottom: 1px solid var(--bcorp-border);
+  padding: 24px 20px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  background: #ffffff !important;
 }
 
 .bcorp-score-section__inner {
   display: flex;
   align-items: center;
   gap: 24px;
-  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 20px 24px;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%) !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 16px !important;
+  padding: 20px 24px !important;
 }
 
 /* Progress Ring - Refined Radial Progress */
@@ -398,14 +422,14 @@
 }
 
 .bcorp-progress-ring__bg {
-  fill: none;
-  stroke: #e8e8e8;
+  fill: none !important;
+  stroke: #e8e8e8 !important;
   stroke-width: 3;
 }
 
 .bcorp-progress-ring__progress {
-  fill: none;
-  stroke: var(--bcorp-primary);
+  fill: none !important;
+  stroke: #1a472a !important;
   stroke-width: 3;
   stroke-linecap: round;
   stroke-dasharray: 295.31;
@@ -428,22 +452,24 @@
 }
 
 .bcorp-progress-ring__score {
-  font-size: 2em;
-  font-weight: 700;
-  color: var(--bcorp-primary);
-  line-height: 1;
-  letter-spacing: -0.02em;
+  font-size: 2em !important;
+  font-weight: 700 !important;
+  color: #1a472a !important;
+  line-height: 1 !important;
+  letter-spacing: -0.02em !important;
+  background: none !important;
 }
 
 .bcorp-progress-ring__label {
-  font-size: 0.5625em;
-  font-weight: 500;
-  color: var(--bcorp-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-size: 0.5625em !important;
+  font-weight: 500 !important;
+  color: #6c757d !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
   margin-top: 6px;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.3 !important;
+  background: none !important;
 }
 
 /* Benchmarks - Compact Stats */
@@ -456,10 +482,10 @@
 
 .bcorp-benchmark {
   flex: 1;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 10px;
-  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
   text-align: center;
   position: relative;
   cursor: help;
@@ -470,8 +496,8 @@
 }
 
 .bcorp-benchmark:hover {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .bcorp-benchmark:hover .bcorp-tooltip {
@@ -491,41 +517,50 @@
 }
 
 .bcorp-benchmark__value {
-  font-size: 1.5em;
-  font-weight: 700;
-  color: var(--bcorp-text);
-  line-height: 1;
+  font-size: 1.5em !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  line-height: 1 !important;
+  background: none !important;
 }
 
 .bcorp-benchmark__label {
-  font-size: 0.6875em;
-  font-weight: 500;
-  color: var(--bcorp-text-muted);
+  font-size: 0.6875em !important;
+  font-weight: 500 !important;
+  color: #6c757d !important;
   margin-top: 2px;
+  background: none !important;
 }
 
 /* Breakdown Section */
 .bcorp-breakdown {
-  padding: 20px;
-  border-bottom: 1px solid var(--bcorp-border);
+  padding: 20px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  background: #ffffff !important;
 }
 
 .bcorp-breakdown__title {
-  font-size: 1.125em;
-  font-weight: 700;
-  color: var(--bcorp-text);
-  margin: 0 0 16px;
+  font-size: 1.125em !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin: 0 0 16px !important;
   font-style: italic;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-breakdown__subtitle {
-  font-size: 0.875em;
-  font-weight: 600;
-  color: var(--bcorp-text);
-  margin: 0 0 12px;
+  font-size: 0.875em !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  margin: 0 0 12px !important;
   display: flex;
   align-items: center;
   gap: 6px;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-breakdown__info {
@@ -616,70 +651,81 @@
 }
 
 .bcorp-category__name {
-  font-size: 0.875em;
-  color: var(--bcorp-text);
+  font-size: 0.875em !important;
+  color: #1a1a1a !important;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-category__score {
-  font-size: 0.875em;
-  font-weight: 600;
-  color: var(--bcorp-text);
+  font-size: 0.875em !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  background: none !important;
 }
 
 .bcorp-category__bar {
-  height: 8px;
-  background: var(--bcorp-bg-secondary);
-  border-radius: 4px;
+  height: 8px !important;
+  background: #f8f9fa !important;
+  border-radius: 4px !important;
   overflow: hidden;
 }
 
 .bcorp-category__fill {
-  height: 100%;
-  border-radius: 4px;
+  height: 100% !important;
+  border-radius: 4px !important;
   width: 0;
   transition: width 1s ease-out;
   transition-delay: var(--delay, 0s);
+  display: block !important;
 }
 
 .bcorp-modal-overlay.active .bcorp-category__fill {
-  width: var(--width);
+  width: var(--width) !important;
 }
 
 .bcorp-category--governance .bcorp-category__fill {
-  background: linear-gradient(90deg, var(--bcorp-governance), var(--bcorp-accent));
+  background: linear-gradient(90deg, #1a472a, #8bc34a) !important;
 }
 
 .bcorp-category--workers .bcorp-category__fill {
-  background: linear-gradient(90deg, var(--bcorp-workers), var(--bcorp-accent));
+  background: linear-gradient(90deg, #2d6a4f, #8bc34a) !important;
 }
 
 .bcorp-category--community .bcorp-category__fill {
-  background: linear-gradient(90deg, var(--bcorp-community), var(--bcorp-accent));
+  background: linear-gradient(90deg, #40916c, #8bc34a) !important;
 }
 
 .bcorp-category--environment .bcorp-category__fill {
-  background: linear-gradient(90deg, var(--bcorp-environment), var(--bcorp-accent));
+  background: linear-gradient(90deg, #52b788, #8bc34a) !important;
 }
 
 .bcorp-category--customers .bcorp-category__fill {
-  background: linear-gradient(90deg, var(--bcorp-customers), var(--bcorp-accent));
+  background: linear-gradient(90deg, #74c69d, #8bc34a) !important;
 }
 
 /* Proof Section */
 .bcorp-proof {
-  padding: 20px;
-  background: var(--bcorp-bg-secondary);
-  border-left: 4px solid var(--bcorp-primary);
-  margin: 20px;
-  border-radius: 0 var(--bcorp-radius-sm) var(--bcorp-radius-sm) 0;
+  padding: 20px !important;
+  background: #f8f9fa !important;
+  border-left: 4px solid #1a472a !important;
+  margin: 20px !important;
+  border-radius: 0 8px 8px 0 !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
 }
 
 .bcorp-proof__title {
-  font-size: 1em;
-  font-weight: 700;
-  color: var(--bcorp-text);
-  margin: 0 0 12px;
+  font-size: 1em !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  margin: 0 0 12px !important;
   font-style: italic;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-proof__content {
@@ -710,36 +756,43 @@
 }
 
 .bcorp-proof__heading {
-  font-size: 0.9375em;
-  font-weight: 600;
-  color: var(--bcorp-text);
-  margin: 0 0 4px;
+  font-size: 0.9375em !important;
+  font-weight: 600 !important;
+  color: #1a1a1a !important;
+  margin: 0 0 4px !important;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-proof__description {
-  font-size: 0.8125em;
-  color: var(--bcorp-text-muted);
-  line-height: 1.5;
-  margin: 0 0 12px;
+  font-size: 0.8125em !important;
+  color: #6c757d !important;
+  line-height: 1.5 !important;
+  margin: 0 0 12px !important;
+  background: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .bcorp-proof__link {
-  display: inline-flex;
+  display: inline-flex !important;
   align-items: center;
   gap: 6px;
-  font-size: 0.875em;
-  font-weight: 600;
-  color: var(--bcorp-primary);
-  text-decoration: none;
-  padding: 8px 16px;
-  border: 2px solid var(--bcorp-primary);
-  border-radius: 50px;
+  font-size: 0.875em !important;
+  font-weight: 600 !important;
+  color: #1a472a !important;
+  text-decoration: none !important;
+  padding: 8px 16px !important;
+  border: 2px solid #1a472a !important;
+  border-radius: 50px !important;
   transition: all 0.2s ease;
+  background: transparent !important;
 }
 
 .bcorp-proof__link:hover {
-  background: var(--bcorp-primary);
-  color: white;
+  background: #1a472a !important;
+  color: #ffffff !important;
 }
 
 .bcorp-proof__link svg {
