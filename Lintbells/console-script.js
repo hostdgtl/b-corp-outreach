@@ -77,11 +77,11 @@
 
     /* Modal chrome */
     .bcorp-modal { border-radius: 12px !important; background: #ffffff !important; }
-    .bcorp-modal__header { border-bottom: 1px solid #e0e0e0 !important; }
-    .bcorp-modal__description { border-bottom: 1px solid #e0e0e0 !important; }
-    .bcorp-score-section { border-bottom: 1px solid #e0e0e0 !important; }
+    .bcorp-modal__header { border-bottom: 1px solid #e0e0e0 !important; background: #ffffff !important; }
+    .bcorp-modal__description { border-bottom: 1px solid #e0e0e0 !important; background: #ffffff !important; }
+    .bcorp-score-section { border-bottom: 1px solid #e0e0e0 !important; background: #ffffff !important; }
     .bcorp-score-section__inner { border-radius: 16px !important; }
-    .bcorp-breakdown { border-bottom: 1px solid #e0e0e0 !important; }
+    .bcorp-breakdown { border-bottom: 1px solid #e0e0e0 !important; background: #ffffff !important; }
     .bcorp-benchmark { border-radius: 10px !important; }
 
     /* Category bar gradients */

@@ -14,6 +14,17 @@ The company must already have a folder at `C:\Users\alan\Desktop\Outreach\{Compa
 - The browser remains open for Host Digital to screen-record
 - A screenshot is saved confirming the widget rendered
 
+## Multiple companies
+
+When injecting for multiple companies, **use separate browser tabs** so all injected pages remain accessible for screen recording. Use the `browser_tabs` MCP tool:
+
+1. The first company uses the default tab (no action needed).
+2. For each subsequent company, open a new tab with `browser_tabs` action `new` **before** navigating to that company's site.
+3. After all injections are complete, use `browser_tabs` action `list` to confirm all tabs are still open.
+4. Use `browser_tabs` action `select` with the tab index to switch between tabs if needed.
+
+**Never navigate away from an already-injected tab.** Opening a new URL in the same tab destroys the previous injection. Always create a new tab first.
+
 ## How to execute
 
 ### Step 1: Identify the company and find its folder
@@ -136,7 +147,44 @@ If the widget div exists but is empty:
 - The company folder may not be pushed to GitHub yet — tell Host Digital
 - Or jsDelivr is slow on first load — wait a few more seconds and check again
 
-### Step 8: Take a screenshot
+### Step 8: Visually verify the widget and modal styling
+
+Before taking the final screenshot, **double-check the styling of the in-situ widget and modal** to catch Shopify theme CSS bleed:
+
+1. **Scroll the trigger into view** and take a screenshot. Check that the trigger badge has a white background, correct text, and the brand logo loads.
+
+2. **Open the modal** by clicking the `.bcorp-trigger` element via `browser_evaluate`:
+   ```javascript
+   document.querySelector('.bcorp-trigger')?.click()
+   ```
+
+3. **Inspect computed styles** on the modal header and key sections via `browser_evaluate`:
+   ```javascript
+   (() => {
+     const header = document.querySelector('.bcorp-modal__header');
+     const modal = document.querySelector('.bcorp-modal');
+     const desc = document.querySelector('.bcorp-modal__description');
+     const score = document.querySelector('.bcorp-score-section');
+     return {
+       headerBg: header ? getComputedStyle(header).backgroundColor : 'missing',
+       modalBg: modal ? getComputedStyle(modal).backgroundColor : 'missing',
+       descBg: desc ? getComputedStyle(desc).backgroundColor : 'missing',
+       scoreBg: score ? getComputedStyle(score).backgroundColor : 'missing'
+     };
+   })()
+   ```
+   All backgrounds must be `rgb(255, 255, 255)` (white). If any show the site's theme color (e.g. blue, dark), Shopify CSS is bleeding in.
+
+4. **Take a screenshot of the open modal** to visually confirm no theme bleed.
+
+5. **Close the modal** by removing the `active` class:
+   ```javascript
+   document.querySelector('.bcorp-modal-overlay')?.classList.remove('active')
+   ```
+
+6. If any styling issues are found, inject additional CSS fixes via `browser_evaluate` and re-check. Flag any fixes to Host Digital so they can be added to the console script for future use.
+
+### Step 9: Take the final screenshot
 
 Scroll the widget into view first:
 
@@ -146,7 +194,7 @@ document.getElementById('bcorp-widget')?.scrollIntoView({ behavior: 'instant', b
 
 Then use `browser_take_screenshot` to capture the page with the widget visible.
 
-### Step 9: Report and leave browser open
+### Step 10: Report and leave browser open
 
 Tell Host Digital:
 - Which product page the widget was injected on (the URL)
@@ -166,7 +214,7 @@ Tell Host Digital:
 
 **Do not navigate away from the product page** after the widget is injected.
 
-**Do not click the widget trigger button** to open the modal. Host Digital wants to do this during the screen recording for a natural walkthrough effect.
+**Close the modal after verification.** Step 8 opens the modal to verify styling, but you must close it before reporting. Host Digital wants to click the trigger during screen recording for a natural walkthrough effect.
 
 ## Judgment calls
 
