@@ -1,17 +1,18 @@
+```javascript
 {
   window.BCORP_CONFIG = {
-    brandName: 'Otiumberg',
-    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/Otiumberg/assets/Otiumberg-Logo.png',
-    overallScore: 82.4,
-    certificationDate: 'July 2023',
+    brandName: 'ARTAH',
+    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/Artah-Nutrition/assets/Artah-Nutrition-Logo.svg',
+    overallScore: 87.9,
+    certificationDate: 'October 2023',
     qualifyingScore: 80,
     medianScore: 50.9,
-    governance: 14.5,
-    workers: 15.0,
-    community: 15.8,
-    environment: 33.0,
-    customers: 3.9,
-    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/otiumberg/'
+    governance: 17.7,
+    workers: 29.0,
+    community: 21.1,
+    environment: 15.6,
+    customers: 4.3,
+    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/artah-nutrition-limited/'
   };
 
   const widgetContainer = document.getElementById('bcorp-widget');
@@ -118,3 +119,4 @@
 
   console.log("Widget successfully re-injected!");
 }
+```

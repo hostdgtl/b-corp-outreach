@@ -1,3 +1,4 @@
+```javascript
 {
   window.BCORP_CONFIG = {
     brandName: 'Otiumberg',
@@ -118,3 +119,4 @@
 
   console.log("Widget successfully re-injected!");
 }
+```
