@@ -157,6 +157,15 @@ Create a file at `{Company-Name}\console-script.js` using this template. Replace
     .bcorp-proof { background: #f8f9fa !important; border-left: 4px solid #1a472a !important; border-radius: 0 8px 8px 0 !important; }
     .bcorp-proof__link { border: 2px solid #1a472a !important; border-radius: 50px !important; color: #1a472a !important; text-decoration: none !important; }
     .bcorp-proof__link:hover { background: #1a472a !important; color: #ffffff !important; }
+
+    /* Trigger hover protection */
+    .bcorp-trigger { background: #ffffff !important; border: 1px solid #EBEBEB !important; }
+    .bcorp-trigger:hover { background: #f8f9fa !important; border-color: #1a472a !important; }
+    .bcorp-trigger * { background: none !important; }
+    .bcorp-trigger__logo-wrapper { background: #ffffff !important; border: 1px solid #EBEBEB !important; border-radius: 50% !important; }
+
+    /* Overlay scroll fix */
+    .bcorp-modal-overlay:not(.active) { pointer-events: none !important; }
   `;
   document.head.appendChild(style);
 
