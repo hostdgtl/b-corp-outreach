@@ -21,7 +21,7 @@
   // Default config — clients override via window.BCORP_CONFIG
   var defaults = {
     brandName: 'ARTAH',
-    brandLogo: CDN_BASE + 'Artah-Nutrition-Logo.svg',
+    brandLogo: CDN_BASE + 'Artah-Nutrition-Logo.png',
     bcorpLogo: CDN_BASE + 'b-corp-logo.png',
     overallScore: 87.9,
     certificationDate: 'October 2023',

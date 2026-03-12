@@ -1,7 +1,7 @@
 {
   window.BCORP_CONFIG = {
     brandName: 'ARTAH',
-    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/Artah-Nutrition/assets/Artah-Nutrition-Logo.svg',
+    brandLogo: 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/Artah-Nutrition/assets/Artah-Nutrition-Logo.png',
     overallScore: 87.9,
     certificationDate: 'October 2023',
     qualifyingScore: 80,
