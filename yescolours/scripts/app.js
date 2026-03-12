@@ -8,7 +8,7 @@
 (function () {
   'use strict';
 
-  var CDN_BASE = 'https://hostdgtl.com/assets/';
+  var CDN_BASE = 'https://cdn.jsdelivr.net/gh/hostdgtl/b-corp-outreach@main/yescolours/assets/';
 
   // Inject Google Fonts if not already present
   if (!document.querySelector('link[href*="fonts.googleapis.com/css2"][href*="Inter"]')) {
@@ -20,19 +20,19 @@
 
   // Default config — clients override via window.BCORP_CONFIG
   var defaults = {
-    brandName: 'The Handmade Soap Company',
-    brandLogo: CDN_BASE + 'yes_colours.png',
+    brandName: 'YesColours',
+    brandLogo: CDN_BASE + 'yescolours-logo.svg',
     bcorpLogo: CDN_BASE + 'b-corp-logo.png',
-    overallScore: 94.1,
-    certificationDate: 'October 2022',
+    overallScore: 80.7,
+    certificationDate: 'May 2025',
     qualifyingScore: 80,
     medianScore: 50.9,
-    governance: 17.4,
-    workers: 20.5,
-    community: 20.8,
-    environment: 32.0,
-    customers: 3.1,
-    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/the-handmade-soap-company/'
+    governance: 16.1,
+    workers: 19.6,
+    community: 21.9,
+    environment: 18.1,
+    customers: 4.8,
+    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/yes-colours/'
   };
 
   var cfg = Object.assign({}, defaults, window.BCORP_CONFIG || {});
@@ -168,6 +168,40 @@
       '<div class="bcorp-category__header"><span class="bcorp-category__name">' + label + '</span><span class="bcorp-category__score">' + score + '</span></div>' +
       '<div class="bcorp-category__bar"><div class="bcorp-category__fill" style="--width: ' + barWidth(score) + '; --delay: ' + delay + 's"></div></div>' +
     '</div>';
+  }
+
+  // Move modal overlay to document.body so it escapes any stacking context
+  // (e.g. Shopify themes where <main> has position:relative + z-index)
+  var modalOverlay = container.querySelector('.bcorp-modal-overlay');
+  if (modalOverlay) {
+    document.body.appendChild(modalOverlay);
+
+    // Set CSS custom properties directly on the overlay element so they're
+    // available to all descendants regardless of stylesheet caching or
+    // host theme interference.
+    var props = {
+      '--bcorp-primary': '#1a472a',
+      '--bcorp-primary-light': '#2d5a3d',
+      '--bcorp-accent': '#8bc34a',
+      '--bcorp-accent-light': '#c5e1a5',
+      '--bcorp-bg': '#ffffff',
+      '--bcorp-bg-secondary': '#f8f9fa',
+      '--bcorp-text': '#1a1a1a',
+      '--bcorp-text-muted': '#6c757d',
+      '--bcorp-border': '#e0e0e0',
+      '--bcorp-shadow': '0 4px 20px rgba(0, 0, 0, 0.1)',
+      '--bcorp-radius': '12px',
+      '--bcorp-radius-sm': '8px',
+      '--bcorp-font': "'Inter var', 'Inter', ui-sans-serif, system-ui, sans-serif",
+      '--bcorp-governance': '#1a472a',
+      '--bcorp-workers': '#2d6a4f',
+      '--bcorp-community': '#40916c',
+      '--bcorp-environment': '#52b788',
+      '--bcorp-customers': '#74c69d'
+    };
+    for (var p in props) {
+      if (props.hasOwnProperty(p)) modalOverlay.style.setProperty(p, props[p]);
+    }
   }
 
   // ---- Interactivity ----
