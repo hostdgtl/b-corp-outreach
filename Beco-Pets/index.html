@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B Corp Widget - Local Preview</title>
+  <link rel="stylesheet" href="scripts/style.css">
+</head>
+<body>
+
+<div id="bcorp-widget"></div>
+
+<script>
+  window.BCORP_CONFIG = {
+    brandName: 'Beco Pets',
+    brandLogo: 'assets/Beco-Pets-Logo.png',
+    bcorpLogo: 'assets/b-corp-logo.png',
+    overallScore: 101.6,
+    certificationDate: 'July 2022',
+    qualifyingScore: 80,
+    medianScore: 50.9,
+    governance: 17.6,
+    workers: 21.0,
+    community: 18.8,
+    environment: 40.6,
+    customers: 3.5,
+    profileUrl: 'https://www.bcorporation.net/en-us/find-a-b-corp/company/wannabeco-ltd-ta-beco-pets/'
+  };
+</script>
+<script src="scripts/app.js"></script>
+
+</body>
+</html>
